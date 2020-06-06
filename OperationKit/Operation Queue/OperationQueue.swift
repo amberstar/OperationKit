@@ -50,14 +50,14 @@ open class OperationQueue: Foundation.OperationQueue {
         if let operation = op as? Operation {
             operation.addObserver(self)
             
-            let dependencies = operation.conditions.flatMap({ $0.dependency(for: operation) })
+            let dependencies = operation.conditions.compactMap({ $0.dependency(for: operation) })
             
             for operationDependency in dependencies {
                 operation.addDependency(operationDependency)
                 addOperation(operationDependency)
             }
             
-            let concurrencyCategories: [String] = operation.conditions.flatMap({ condition in
+            let concurrencyCategories: [String] = operation.conditions.compactMap({ condition in
                 if type(of: condition).isMutuallyExclusive == false { return nil }
                 
                 return "\(type(of: condition))"

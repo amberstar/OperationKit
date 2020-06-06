@@ -117,7 +117,7 @@ extension URLRequestOperationTests {
         let urlRequestOperation = URLRequestOperation(request: request)
         var errorsShouldNotContainsUnacceptableStatusCodeFailure = false
         let operationObserver = OperationTestObserver(operationDidFinishObserver: { _, errors in
-            errorsShouldNotContainsUnacceptableStatusCodeFailure = errors?.flatMap({ $0 as? OperationKitError }).filter({ $0.isUnacceptableStatusCode }).isEmpty == true
+            errorsShouldNotContainsUnacceptableStatusCodeFailure = errors?.compactMap({ $0 as? OperationKitError }).filter({ $0.isUnacceptableStatusCode }).isEmpty == true
             expectation.fulfill()
         })
         
@@ -139,7 +139,7 @@ extension URLRequestOperationTests {
         let urlRequestOperation = URLRequestOperation(request: request)
         var errorsShouldNotContainsUnacceptableStatusCodeFailure = false
         let operationObserver = OperationTestObserver (operationDidFinishObserver: { _, errors in
-            errorsShouldNotContainsUnacceptableStatusCodeFailure = errors?.flatMap({ $0 as? OperationKitError }).filter({ $0.isUnacceptableStatusCode }).isEmpty == true
+            errorsShouldNotContainsUnacceptableStatusCodeFailure = errors?.compactMap({ $0 as? OperationKitError }).filter({ $0.isUnacceptableStatusCode }).isEmpty == true
             expectation.fulfill()
         })
         
@@ -161,7 +161,7 @@ extension URLRequestOperationTests {
         let urlRequestOperation = URLRequestOperation(request: request)
         var errorsContainsUnacceptableStatusCodeFailure = false
         let operationObserver = OperationTestObserver(operationDidFinishObserver: { _, errors in
-            errorsContainsUnacceptableStatusCodeFailure = errors?.flatMap({ $0 as? OperationKitError }).filter({ $0.isUnacceptableStatusCode }).isEmpty == false
+            errorsContainsUnacceptableStatusCodeFailure = errors?.compactMap({ $0 as? OperationKitError }).filter({ $0.isUnacceptableStatusCode }).isEmpty == false
             expectation.fulfill()
         })
         
@@ -183,7 +183,7 @@ extension URLRequestOperationTests {
         let urlRequestOperation = URLRequestOperation(request: request)
         var errorsContainsUnacceptableStatusCodeFailure = false
         let operationObserver = OperationTestObserver(operationDidFinishObserver: { _, errors in
-            errorsContainsUnacceptableStatusCodeFailure = errors?.flatMap({ $0 as? OperationKitError }).filter({ $0.isUnacceptableStatusCode }).isEmpty == false
+            errorsContainsUnacceptableStatusCodeFailure = errors?.compactMap({ $0 as? OperationKitError }).filter({ $0.isUnacceptableStatusCode }).isEmpty == false
             expectation.fulfill()
         })
         

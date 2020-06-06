@@ -64,7 +64,7 @@ class ExclusivityManager {
                     var operationsWithThisCategory = matchingOperations,
                     
                     /// the index for the operation
-                    let index = operationsWithThisCategory.index(of: operation) {
+                    let index = operationsWithThisCategory.firstIndex(of: operation) {
                     
                     operationsWithThisCategory.remove(at: index)
                     self.operations[category] = operationsWithThisCategory

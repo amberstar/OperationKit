@@ -314,7 +314,7 @@ open class Operation: Foundation.Operation {
         }
         
         conditionGroup.notify(queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default)) {
-            self.internalErrors += results.flatMap { $0?.error }
+            self.internalErrors += results.compactMap { $0?.error }
             
             if self.isCancelled {
                 let error = NSError(domain: OperationErrorDomainCode, code: OperationErrorCode.conditionFailed.rawValue, userInfo: nil)

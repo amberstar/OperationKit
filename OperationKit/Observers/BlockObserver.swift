@@ -31,7 +31,7 @@ struct BlockObserver: ObservableOperation {
     
     init(
         startHandler: ((Operation) -> Void)? = nil,
-        produceHandler: ((Operation, Foundation.NSOperation) -> Void)? = nil,
+        produceHandler: ((Operation, Foundation.Operation) -> Void)? = nil,
         finishHandler: ((Operation, [Error]) -> Void)? = nil) {
         
         self.startHandler = startHandler

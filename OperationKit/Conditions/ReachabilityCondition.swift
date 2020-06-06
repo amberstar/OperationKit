@@ -59,7 +59,7 @@ public struct ReachabilityCondition: OperationCondition {
     }
 }
 
-private let defaultReferenceKey = "_defaultReferenceKey"
+
 
 public enum ReachabilityError: Error {
     case failedToCreateWithAddress(sockaddr_in)
@@ -82,7 +82,7 @@ open class ReachabilityManager {
     
     // MARK: Initialization
     
-    required public init(reference: SCNetworkReachability, host: String = defaultReferenceKey) {
+    required public init(reference: SCNetworkReachability, host: String = "_defaultReferenceKey") {
         self.host = host
         queue.sync {
             var reachabilityFlags: SCNetworkReachabilityFlags = []
@@ -125,7 +125,7 @@ open class ReachabilityManager {
     /// remove the observer for the current instance of the reachability
     open func removeObserver(_ observer: NetworkObservable) {
         queue.sync {
-            guard let index = self.observers.index(where: { $0 === observer }) else { return }
+            guard let index = self.observers.firstIndex(where: { $0 === observer }) else { return }
             
             self.observers.remove(at: index)
         }
@@ -177,7 +177,7 @@ open class ReachabilityManager {
     
     // MARK: Static methods
     
-    open static func reachabilityForInternetConnection() throws -> ReachabilityManager {
+    public static func reachabilityForInternetConnection() throws -> ReachabilityManager {
         var address = sockaddr_in()
         address.sin_len = UInt8(MemoryLayout.size(ofValue: address))
         address.sin_family = sa_family_t(AF_INET)
@@ -193,7 +193,7 @@ open class ReachabilityManager {
     
     /// Naive implementation of the reachability
     /// TODO: VPN, cellular connection.
-    open static func requestReachability(_ url: URL, completionHandler: (Bool) -> Void) {
+    public static func requestReachability(_ url: URL, completionHandler: (Bool) -> Void) {
         guard let host = url.host else {
             completionHandler(false)
             return
